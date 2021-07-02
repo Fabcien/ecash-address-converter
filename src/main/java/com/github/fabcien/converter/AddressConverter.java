@@ -30,8 +30,11 @@ public class AddressConverter {
 
     private static final String SEPARATOR = ":";
 
-    private static final String PREFIX = "ecash";
-    private static final int[] PREFIX_BYTES = new int[]{5, 3, 1, 19, 8, 0};
+    private static final String ECASH_PREFIX = "ecash";
+    private static final int[] ECASH_PREFIX_BYTES = new int[]{5, 3, 1, 19, 8, 0};
+
+    private static final String BCH_PREFIX = "bitcoincash";
+    private static final int[] BCH_PREFIX_BYTES = new int[]{2, 9, 20, 3, 15, 9, 14, 3, 1, 19, 8, 0};
 
     private static final BigInteger[] GENERATORS = new BigInteger[]{
             new BigInteger("98f2bc8e61", 16),
@@ -42,7 +45,7 @@ public class AddressConverter {
 
     private static final BigInteger POLYMOD_CONSTANT = new BigInteger("07ffffffff", 16);
 
-    public static String toECashAddress(String legacyAddress) {
+    private static String toCashAddress(String legacyAddress, String prefix, int[] prefixBytes) {
         int oldVersion = B58.decode(legacyAddress)[0];
         int newVersion = getVersion(true, oldVersion);
         byte[] payloadBytes = B58.decodeChecked(legacyAddress, oldVersion);
@@ -56,22 +59,59 @@ public class AddressConverter {
         payload = concatArrays(new int[]{newVersion}, payload);
 
         payload = convertBits(payload, 8, 5);
-        int[] checksum = checksum(payload);
-        String ecashAddress = Base32.encode(concatArrays(payload, checksum));
-        return PREFIX + SEPARATOR + ecashAddress;
+        int[] checksum = checksum(prefixBytes, payload);
+        String cashAddress = Base32.encode(concatArrays(payload, checksum));
+        return prefix + SEPARATOR + cashAddress;
     }
 
-    public static String toLegacyAddress(String ecashAddress) {
-        if (ecashAddress.contains(SEPARATOR))
-            ecashAddress = ecashAddress.split(SEPARATOR)[1];
+    public static String legacyToECashAddress(String legacyAddress) {
+        return toCashAddress(legacyAddress, ECASH_PREFIX, ECASH_PREFIX_BYTES);
+    }
 
-        int[] decoded = Base32.decode(ecashAddress);
+    public static String legacyToBitcoinCashAddress(String legacyAddress) {
+        return toCashAddress(legacyAddress, BCH_PREFIX, BCH_PREFIX_BYTES);
+    }
+
+    private static String cashToLegacyAddress(String cashAddress) {
+        int[] decoded = Base32.decode(cashAddress);
         int[] converted = convertBits(decoded, 5, 8);
         int[] payload = Arrays.copyOfRange(converted, 1, converted.length - 6);
         byte[] payloadBytes = new byte[payload.length];
         for (int i = 0; i < payloadBytes.length; payloadBytes[i] = (byte) payload[i++]);
 
         return B58.encodeToStringChecked(payloadBytes, getVersion(false, converted[0]));
+    }
+
+    private static String checkAndRemovePrefix(String cashAddress, String prefix) {
+        if (cashAddress.contains(SEPARATOR)) {
+            String[] parts = cashAddress.split(SEPARATOR);
+            if (! parts[0].equals(prefix)) {
+                throw new IllegalArgumentException(
+                    "Invalid prefix for an eCash address: '" + parts[0] + ":', expected '" + prefix + ":'");
+            }
+            return parts[1];
+        }
+        return cashAddress;
+    }
+
+    public static String eCashToLegacyAddress(String ecashAddress) {
+        String addressNoPrefix = checkAndRemovePrefix(ecashAddress, ECASH_PREFIX);
+        return cashToLegacyAddress(addressNoPrefix);
+    }
+
+    public static String BitcoinCashToLegacyAddress(String bchAddress) {
+        String addressNoPrefix = checkAndRemovePrefix(bchAddress, BCH_PREFIX);
+        return cashToLegacyAddress(addressNoPrefix);
+    }
+
+    public static String eCashToBitcoinCashAddress(String ecashAddress) {
+        String legacy = eCashToLegacyAddress(ecashAddress);
+        return legacyToBitcoinCashAddress(legacy);
+    }
+
+    public static String BitcoinCashToECashAddress(String bchAddress) {
+        String legacy = BitcoinCashToLegacyAddress(bchAddress);
+        return legacyToECashAddress(legacy);
     }
 
     private static int getVersion(boolean legacy, int version) {
@@ -84,8 +124,8 @@ public class AddressConverter {
         return 0; //P2PKH
     }
 
-    private static int[] checksum(int[] payload) {
-        BigInteger poly = polymod(concatArrays(concatArrays(PREFIX_BYTES, payload), new int[]{0, 0, 0, 0, 0, 0, 0, 0}));
+    private static int[] checksum(int[] prefixBytes, int[] payload) {
+        BigInteger poly = polymod(concatArrays(concatArrays(prefixBytes, payload), new int[]{0, 0, 0, 0, 0, 0, 0, 0}));
         int[] checksum = new int[8];
 
         for (int i = 0; i < 8; i++) {

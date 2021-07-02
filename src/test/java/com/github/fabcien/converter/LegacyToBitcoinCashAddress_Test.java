@@ -25,24 +25,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Convert address from legacy to eCash format")
-public class LegacyToECashAddress_Test {
+@DisplayName("Convert address from legacy to BCH format")
+public class LegacyToBitcoinCashAddress_Test {
 
     @Test
     @DisplayName("Version - P2PKH")
-    void testLegacyToECashP2PKH() {
+    void testLegacyToBCHP2PKH() {
         String legacy_address = "18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf";
-        String ecash_address = "ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
+        String bch_address = "bitcoincash:qptvav58e40tcrcwuvufr94u7enkjk6s2qlxy5uf9j";
 
-        assertEquals(ecash_address, AddressConverter.legacyToECashAddress(legacy_address));
+        assertEquals(bch_address, AddressConverter.legacyToBitcoinCashAddress(legacy_address));
     }
 
     @Test
     @DisplayName("Version - P2SH")
-    void testLegacyToECashP2SH() {
+    void testLegacyToBCHP2SH() {
         String legacy_address = "3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC";
-        String ecash_address = "ecash:ppm2qsznhks23z7629mms6s4cwef74vcwv2zrv3l8h";
+        String bch_address = "bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq";
 
-        assertEquals(ecash_address, AddressConverter.legacyToECashAddress(legacy_address));
+        assertEquals(bch_address, AddressConverter.legacyToBitcoinCashAddress(legacy_address));
     }
 }

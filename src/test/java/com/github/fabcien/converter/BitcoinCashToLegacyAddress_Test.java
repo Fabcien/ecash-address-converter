@@ -27,45 +27,45 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Convert address from eCash to legacy format")
-public class ECashToLegacyAddress_Test {
+@DisplayName("Convert address from BCH to legacy format")
+public class BitcoinCashToLegacyAddress_Test {
 
     @Test
     @DisplayName("Version - P2PKH")
-    void testECashToLegacyP2PKH() {
+    void testBitcoinCashToLegacyP2PKH() {
         String legacy_address = "18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf";
-        String ecash_address = "ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
+        String bch_address = "bitcoincash:qptvav58e40tcrcwuvufr94u7enkjk6s2qlxy5uf9j";
 
-        assertEquals(legacy_address, AddressConverter.eCashToLegacyAddress(ecash_address));
+        assertEquals(legacy_address, AddressConverter.BitcoinCashToLegacyAddress(bch_address));
     }
 
     @Test
     @DisplayName("Version - P2SH")
-    void testECashToLegacyP2SH() {
+    void testBitcoinCashToLegacyP2SH() {
         String legacy_address = "3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC";
-        String ecash_address = "ecash:ppm2qsznhks23z7629mms6s4cwef74vcwv2zrv3l8h";
+        String bch_address = "bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq";
 
-        assertEquals(legacy_address, AddressConverter.eCashToLegacyAddress(ecash_address));
+        assertEquals(legacy_address, AddressConverter.BitcoinCashToLegacyAddress(bch_address));
     }
 
     @Test
     @DisplayName("No prefix")
-    void testECashToLegacyNoPrefix() {
+    void testBitcoinCashToLegacyNoPrefix() {
         String legacy_address = "3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC";
-        String ecash_address = "ppm2qsznhks23z7629mms6s4cwef74vcwv2zrv3l8h";
+        String bch_address = "ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq";
 
-        assertEquals(legacy_address, AddressConverter.eCashToLegacyAddress(ecash_address));
+        assertEquals(legacy_address, AddressConverter.BitcoinCashToLegacyAddress(bch_address));
     }
 
     @Test
     @DisplayName("Wrong prefix")
-    void testECashToLegacyWrongPrefix() {
-        String cash_address = "foo:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
+    void testBitcoinCashToLegacyWrongPrefix() {
+        String cash_address = "foo:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq";
 
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-           () -> AddressConverter.eCashToLegacyAddress(cash_address),
-           "Expected eCashToLegacyAddress to throw an IllegalArgumentException");
+           () -> AddressConverter.BitcoinCashToLegacyAddress(cash_address),
+           "Expected BitcoinCashToLegacyAddress to throw an IllegalArgumentException");
         assertTrue(e.getMessage().contains("foo:"));
-        assertTrue(e.getMessage().contains("ecash:"));
+        assertTrue(e.getMessage().contains("bitcoincash:"));
     }
 }

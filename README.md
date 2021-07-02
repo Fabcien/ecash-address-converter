@@ -9,14 +9,14 @@ Simple address converter from legacy to eCash and vice versa. It is fully covere
 Usage
 -----
 
-The class `AddressConverter` is the entrypoint to the ecash-address-converter API, use it to convert addresses.
+The class `AddressConverter` is the entry point to the ecash-address-converter API, use it to convert addresses.
 
 ### Legacy -> eCash
 
 You can convert legacy address from a `String` to the eCash format:
 
 ```java
-String ecash_address = AddressConverter.toECashAddress(legacy_address);
+String ecash_address = AddressConverter.legacyToECashAddress(legacy_address);
 ```
 
 ### eCash -> Legacy
@@ -24,7 +24,39 @@ String ecash_address = AddressConverter.toECashAddress(legacy_address);
 You can convert eCash address from a `String` with format "ecash:${your_address}" to legacy format:
 
 ```java
-String legacy_address = AddressConverter.toLegacyAddress(ecash_address);
+String legacy_address = AddressConverter.eCashToLegacyAddress(ecash_address);
+```
+
+### Legacy -> BCH
+
+You can convert legacy address from a `String` to the BCH format:
+
+```java
+String bch_address = AddressConverter.legacyToBitcoinCashAddress(legacy_address);
+```
+
+### BCH -> Legacy
+
+You can convert BCH address from a `String` with format "bitcoincash:${your_address}" to legacy format:
+
+```java
+String legacy_address = AddressConverter.BitcoinCashToLegacyAddress(bch_address);
+```
+
+### BCH -> eCash
+
+You can convert BCH address from a `String` with format "bitcoincash:${your_address}" to the eCash format:
+
+```java
+String ecash_address = AddressConverter.BitcoinCashToECashAddress(bch_address);
+```
+
+### eCash -> BCH
+
+You can convert eCash address from a `String` with format "ecash:${your_address}" to BCH format:
+
+```java
+String bch_address = AddressConverter.eCashToBitcoinCashAddress(bch_address);
 ```
 
 ### Example:
@@ -37,6 +69,24 @@ System.out.println(ecash_address); // output: ecash:qptvav58e40tcrcwuvufr94u7enk
 String ecash_address = "ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
 String legacy_address = AddressConverter.toLegacyAddress(ecash_address);
 System.out.println(legacy_address); // output: 18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf
+```
+
+Packaging
+---------
+
+To build a `.jar` from the project:
+
+```
+mvn package
+```
+
+Test
+----
+
+To run the unit tests:
+
+```
+mvn test
 ```
 
 Include
