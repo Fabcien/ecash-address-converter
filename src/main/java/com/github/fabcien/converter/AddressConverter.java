@@ -1,10 +1,10 @@
-package com.github.kiulian.converter;
+package com.github.fabcien.converter;
 
 /*-
  * -----------------------LICENSE_START-----------------------
- * Bitcoincash address converter
+ * eCash address converter
  * %%
- * Copyright (C) 2018 Igor Kiulian
+ * Copyright (C) 2021 Fabcien
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,7 @@ package com.github.kiulian.converter;
  * -----------------------LICENSE_END-----------------------
  */
 
-
-
-
-import com.github.kiulian.converter.b58.B58;
+import com.github.fabcien.converter.b58.B58;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -33,8 +30,8 @@ public class AddressConverter {
 
     private static final String SEPARATOR = ":";
 
-    private static final String PREFIX = "bitcoincash";
-    private static final int[] PREFIX_BYTES = new int[]{2, 9, 20, 3, 15, 9, 14, 3, 1, 19, 8, 0};
+    private static final String PREFIX = "ecash";
+    private static final int[] PREFIX_BYTES = new int[]{5, 3, 1, 19, 8, 0};
 
     private static final BigInteger[] GENERATORS = new BigInteger[]{
             new BigInteger("98f2bc8e61", 16),
@@ -45,7 +42,7 @@ public class AddressConverter {
 
     private static final BigInteger POLYMOD_CONSTANT = new BigInteger("07ffffffff", 16);
 
-    public static String toCashAddress(String legacyAddress) {
+    public static String toECashAddress(String legacyAddress) {
         int oldVersion = B58.decode(legacyAddress)[0];
         int newVersion = getVersion(true, oldVersion);
         byte[] payloadBytes = B58.decodeChecked(legacyAddress, oldVersion);
@@ -60,15 +57,15 @@ public class AddressConverter {
 
         payload = convertBits(payload, 8, 5);
         int[] checksum = checksum(payload);
-        String cashAddress = Base32.encode(concatArrays(payload, checksum));
-        return PREFIX + SEPARATOR + cashAddress;
+        String ecashAddress = Base32.encode(concatArrays(payload, checksum));
+        return PREFIX + SEPARATOR + ecashAddress;
     }
 
-    public static String toLegacyAddress(String cashAddress) {
-        if (cashAddress.contains(SEPARATOR))
-            cashAddress = cashAddress.split(SEPARATOR)[1];
+    public static String toLegacyAddress(String ecashAddress) {
+        if (ecashAddress.contains(SEPARATOR))
+            ecashAddress = ecashAddress.split(SEPARATOR)[1];
 
-        int[] decoded = Base32.decode(cashAddress);
+        int[] decoded = Base32.decode(ecashAddress);
         int[] converted = convertBits(decoded, 5, 8);
         int[] payload = Arrays.copyOfRange(converted, 1, converted.length - 6);
         byte[] payloadBytes = new byte[payload.length];

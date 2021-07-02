@@ -1,10 +1,10 @@
-package com.github.kiulian.converter;
+package com.github.fabcien.converter;
 
 /*-
  * -----------------------LICENSE_START-----------------------
- * Bitcoincash address converter
+ * eCash address converter
  * %%
- * Copyright (C) 2018 Igor Kiulian
+ * Copyright (C) 2021 Fabcien
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,33 +20,29 @@ package com.github.kiulian.converter;
  * -----------------------LICENSE_END-----------------------
  */
 
-
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Convert address from legacy to bitcoincash format")
-public class LegacyToCashAddress_Test {
-
+@DisplayName("Convert address from eCash to legacy format")
+public class ECashToLegacyAddress_Test {
 
     @Test
     @DisplayName("Version - P2PKH")
-    void testLegacyToCachP2PKH() {
+    void testECashToLegacyP2PKH() {
         String legacy_address = "18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf";
-        String cash_address = "bitcoincash:qptvav58e40tcrcwuvufr94u7enkjk6s2qlxy5uf9j";
+        String ecash_address = "ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
 
-        assertEquals(cash_address, AddressConverter.toCashAddress(legacy_address));
+        assertEquals(legacy_address, AddressConverter.toLegacyAddress(ecash_address));
     }
 
     @Test
     @DisplayName("Version - P2SH")
-    void testLegacyToCashP2SH() {
+    void testECashToLegacyP2SH() {
         String legacy_address = "3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC";
-        String cash_address = "bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq";
+        String ecash_address = "ecash:ppm2qsznhks23z7629mms6s4cwef74vcwv2zrv3l8h";
 
-        assertEquals(cash_address, AddressConverter.toCashAddress(legacy_address));
+        assertEquals(legacy_address, AddressConverter.toLegacyAddress(ecash_address));
     }
-
 }

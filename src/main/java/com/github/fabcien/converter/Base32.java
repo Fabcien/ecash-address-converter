@@ -1,10 +1,10 @@
-package com.github.kiulian.converter;
+package com.github.fabcien.converter;
 
 /*-
  * -----------------------LICENSE_START-----------------------
- * Bitcoincash address converter
+ * eCash address converter
  * %%
- * Copyright (C) 2018 Igor Kiulian
+ * Copyright (C) 2021 Fabcien
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,6 @@ package com.github.kiulian.converter;
  * limitations under the License.
  * -----------------------LICENSE_END-----------------------
  */
-
-
-
 
 import java.util.HashMap;
 import java.util.Map;

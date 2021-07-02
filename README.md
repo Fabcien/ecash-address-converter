@@ -1,41 +1,41 @@
-bitcoin-cash-converter
+eCash-address-converter
 ============
 
-[![Build Status](https://travis-ci.org/sealedtx/bitcoin-cash-converter.svg?branch=master)](https://travis-ci.org/sealedtx/bitcoin-cash-converter) [![](https://jitpack.io/v/sealedtx/bitcoin-cash-converter.svg)](https://jitpack.io/#sealedtx/bitcoin-cash-converter)
+[![Build Status](https://travis-ci.com/Fabcien/ecash-address-converter.svg?branch=main)](https://travis-ci.com/Fabcien/ecash-address-converter)
 
 
-Simple address converter from legacy to [new bitcoincash format](https://github.com/bitcoincashorg/bitcoincash.org/blob/master/spec/cashaddr.md) and vice versa. It is fully covered by unit tests.
+Simple address converter from legacy to eCash and vice versa. It is fully covered by unit tests.
 
 Usage
 -----
 
-The class `AddressConverter` is the entrypoint to the bitcoin-cash-converter API, use it to convert addresses.
+The class `AddressConverter` is the entrypoint to the ecash-address-converter API, use it to convert addresses.
 
-### Legacy -> Bitcoincash
+### Legacy -> eCash
 
-You can convert legacy address from a `String` to new bitcoincash format:
+You can convert legacy address from a `String` to the eCash format:
 
 ```java
-String bitcoincash_address = AddressConverter.toCashAddress(legacy_address);
+String ecash_address = AddressConverter.toECashAddress(legacy_address);
 ```
 
-### Bitcoincash -> Legacy
+### eCash -> Legacy
 
-You can convert bitcoincash address from a `String` with format "bitcoincash:${your_address}" to legacy fomat:
+You can convert eCash address from a `String` with format "ecash:${your_address}" to legacy format:
 
 ```java
-String legacy_address = AddressConverter.toLegacyAddress(bitcoincash_address);
+String legacy_address = AddressConverter.toLegacyAddress(ecash_address);
 ```
 
 ### Example:
 
 ```java
 String legacy_address = "18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf";
-String bitcoincash_address = AddressConverter.toCashAddress(legacy_address);
-System.out.println(bitcoincash_address); // output: bitcoincash:qptvav58e40tcrcwuvufr94u7enkjk6s2qlxy5uf9j
+String ecash_address = AddressConverter.toECashAddress(legacy_address);
+System.out.println(ecash_address); // output: ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9
 
-String cash_address = "bitcoincash:qptvav58e40tcrcwuvufr94u7enkjk6s2qlxy5uf9j";
-String legacy_address = AddressConverter.toLegacyAddress(cash_address);
+String ecash_address = "ecash:qptvav58e40tcrcwuvufr94u7enkjk6s2qxtsl8nr9";
+String legacy_address = AddressConverter.toLegacyAddress(ecash_address);
 System.out.println(legacy_address); // output: 18uzj5qpkmg88uF3R4jKTQRVV3NiQ5SBPf
 ```
 
@@ -54,8 +54,8 @@ Include
 ```
 ```xml
 <dependency>
-  <groupId>com.github.sealedtx</groupId>
-  <artifactId>bitcoin-cash-converter</artifactId>
+  <groupId>com.github.fabcien</groupId>
+  <artifactId>ecash-address-converter</artifactId>
   <version>1.0</version>
 </dependency>
 ```
@@ -71,6 +71,6 @@ allprojects {
 }
   
 dependencies {
-  implementation 'com.github.sealedtx:bitcoin-cash-converter:1.0'
+  implementation 'com.github.fabcien:ecash-address-converter:1.0'
 }
 ```

@@ -1,10 +1,10 @@
-package com.github.kiulian.converter.b58;
+package com.github.fabcien.converter.b58;
 
 /*-
  * -----------------------LICENSE_START-----------------------
- * Bitcoincash address converter
+ * eCash address converter
  * %%
- * Copyright (C) 2018 Igor Kiulian
+ * Copyright (C) 2021 Fabcien
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,6 @@ package com.github.kiulian.converter.b58;
  * limitations under the License.
  * -----------------------LICENSE_END-----------------------
  */
-
-
-
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

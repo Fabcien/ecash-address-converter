@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.ikiulian</groupId>
-    <artifactId>bitcoin-cash-converter</artifactId>
+    <groupId>com.github.fabcien</groupId>
+    <artifactId>ecash-address-converter</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Bitcoincash address converter</name>
-    <description>Address converter from legacy to bitcoincach and vice versa</description>
+    <name>eCash</name>
+    <description>eCash address converter</description>
 
     <licenses>
         <license>
@@ -25,6 +25,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -38,9 +39,9 @@
                 <configuration>
                     <licenseName>apache_v2</licenseName>
                     <licenseFile>LICENSE</licenseFile>
-                    <organizationName>Igor Kiulian</organizationName>
-                    <projectName>Bitcoincash address converter</projectName>
-                    <inceptionYear>2018</inceptionYear>
+                    <organizationName>Fabcien</organizationName>
+                    <projectName>eCash address converter</projectName>
+                    <inceptionYear>2021</inceptionYear>
                 </configuration>
 
                 <executions>
@@ -52,10 +53,8 @@
                         </goals>
                         <phase>process-sources</phase>
                         <configuration>
-                            <processStartTag>----------------------- LICENSE_START -----------------------
-                            </processStartTag>
-                            <processEndTag>----------------------- LICENSE_END -----------------------
-                            </processEndTag>
+                            <processStartTag>----------------------- LICENSE_START -----------------------</processStartTag>
+                            <processEndTag>----------------------- LICENSE_END -----------------------</processEndTag>
                             <roots>
                                 <root>src/main/java</root>
                                 <root>src/test/java</root>
